@@ -1,12 +1,19 @@
+import js from '@eslint/js';
 import globals from 'globals';
+
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
 
-import { sharedConfig, sharedLanguageOptions } from '../eslint.shared.mjs';
+import { defineConfig } from 'eslint/config';
+import {
+  sharedConfig,
+  sharedLanguageOptions,
+  stylisticConfig,
+} from '../eslint.shared.mjs';
 
-export default [
+export default defineConfig([
   { ignores: ['dist'] },
-  ...sharedConfig,
+  js.configs.recommended,
   {
     files: ['**/*.{js,jsx}'],
     languageOptions: {
@@ -30,4 +37,6 @@ export default [
       ],
     },
   },
-];
+  ...stylisticConfig,
+  ...sharedConfig,
+]);

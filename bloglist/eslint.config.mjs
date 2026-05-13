@@ -1,11 +1,16 @@
+import js from '@eslint/js';
 import globals from 'globals';
 
 import { defineConfig, globalIgnores } from 'eslint/config';
-import { sharedConfig, sharedLanguageOptions } from './eslint.shared.mjs';
+import {
+  sharedConfig,
+  sharedLanguageOptions,
+  stylisticConfig,
+} from './eslint.shared.mjs';
 
 export default defineConfig([
   globalIgnores(['client/**']),
-  ...sharedConfig,
+  js.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs}'],
     languageOptions: {
@@ -25,4 +30,6 @@ export default defineConfig([
       ],
     },
   },
+  ...stylisticConfig,
+  ...sharedConfig,
 ]);

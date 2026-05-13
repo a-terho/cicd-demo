@@ -1,4 +1,4 @@
-import config from '../utils/config.js';
+import config from './config.js';
 import morgan from 'morgan';
 import jwt from 'jsonwebtoken';
 

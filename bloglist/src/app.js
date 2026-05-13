@@ -1,10 +1,15 @@
+import { join } from 'node:path';
+import { projectRoot } from './utils/dir.js';
 import middleware from './utils/middleware.js';
-
 import express from 'express';
 
 // luodaan Express app
 const app = express();
 export default app;
+
+// jaa bundlattu frontend tuotantovaiheessa
+console.log(projectRoot);
+app.use(express.static(join(projectRoot, '/client/dist')));
 
 // globaalit middlewaret
 app.use(express.json());

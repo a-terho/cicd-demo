@@ -1,18 +1,17 @@
-import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 
-const stylisticConfig = {
-  plugins: { '@stylistic/js': stylistic },
-  rules: {
-    '@stylistic/js/indent': ['error', 2],
-    '@stylistic/js/linebreak-style': ['error', 'unix'],
-    '@stylistic/js/quotes': ['error', 'single', { avoidEscape: true }],
+export const stylisticConfig = [
+  {
+    plugins: { '@stylistic/js': stylistic },
+    rules: {
+      '@stylistic/js/indent': ['error', 2],
+      '@stylistic/js/linebreak-style': ['error', 'unix'],
+      '@stylistic/js/quotes': ['error', 'single', { avoidEscape: true }],
+    },
   },
-};
+];
 
 export const sharedConfig = [
-  js.configs.recommended,
-  stylisticConfig,
   {
     rules: {
       eqeqeq: 'error',
