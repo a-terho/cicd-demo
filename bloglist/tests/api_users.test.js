@@ -1,13 +1,13 @@
-const assert = require('node:assert');
-const { test, describe, beforeEach, after } = require('node:test');
-const supertest = require('supertest');
-const mongoose = require('mongoose');
+import assert from 'node:assert';
+import { test, describe, beforeEach, after } from 'node:test';
+import supertest from 'supertest';
+import mongoose from 'mongoose';
 
-const app = require('../app');
+import app from '../app.js';
 const api = supertest(app);
 
-const { usersMany } = require('./data');
-const User = require('../models/User');
+import { usersMany } from './data.js';
+import User from '../models/User.js';
 
 describe('route /api/users with empty database', () => {
   beforeEach(async () => {
@@ -128,7 +128,7 @@ describe('route /api/users with some users in database', () => {
     test('returns id field in correct format', async () => {
       const res = await api.get('/api/users');
 
-      for (let user of res?.body) {
+      for (let user of res.body) {
         assert.strictEqual(
           typeof user?.id,
           'string',
@@ -148,7 +148,7 @@ describe('route /api/users with some users in database', () => {
         .expect(200)
         .expect('Content-Type', /application\/json/);
 
-      for (let user of res?.body) {
+      for (let user of res.body) {
         assert.strictEqual(user.passwordHash, undefined);
       }
     });

@@ -1,8 +1,9 @@
-const router = require('express').Router();
-module.exports = router;
+import { Router } from 'express';
+const router = Router();
+export default router;
 
-const Blog = require('../models/Blog');
-const User = require('../models/User');
+import Blog from '../models/Blog.js';
+import User from '../models/User.js';
 
 router.post('/reset', async (req, res) => {
   await Blog.deleteMany({});

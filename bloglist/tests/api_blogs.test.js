@@ -1,23 +1,23 @@
-const assert = require('node:assert');
-const { test, describe, beforeEach, after } = require('node:test');
-const supertest = require('supertest');
-const mongoose = require('mongoose');
+import assert from 'node:assert';
+import { test, describe, beforeEach, after } from 'node:test';
+import supertest from 'supertest';
+import mongoose from 'mongoose';
 
-const app = require('../app');
+import app from '../app.js';
 const api = supertest(app);
 
-const {
+import {
   randomElement,
   giveValidRemovedBlogId,
   giveValidBlog,
   giveValidBlogId,
   giveSomeOtherValidUser,
   giveValidJwtToken,
-} = require('./api.helpers');
+} from './api.helpers.js';
 
-const { blogsMany, usersMany } = require('./data');
-const Blog = require('../models/Blog');
-const User = require('../models/User');
+import { blogsMany, usersMany } from './data.js';
+import Blog from '../models/Blog.js';
+import User from '../models/User.js';
 
 // testitietokannan valmistelu
 beforeEach(async () => {
@@ -69,7 +69,7 @@ describe('route /api/blogs', () => {
     test('returns id field in correct format', async () => {
       const res = await api.get('/api/blogs');
 
-      for (let blog of res?.body) {
+      for (let blog of res.body) {
         assert.strictEqual(
           typeof blog?.id,
           'string',

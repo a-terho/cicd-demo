@@ -1,8 +1,8 @@
-const config = require('../utils/config');
-const morgan = require('morgan');
-const jwt = require('jsonwebtoken');
+import config from '../utils/config.js';
+import morgan from 'morgan';
+import jwt from 'jsonwebtoken';
 
-const User = require('../models/User');
+import User from '../models/User.js';
 
 morgan.token('body', (req, res) => JSON.stringify(req.body));
 const addRequestLogger = () => {
@@ -44,7 +44,7 @@ const globalErrorHandler = (err, req, res, next) => {
     err.message.includes('E11000 duplicate key error')
   ) {
     let username = err?.keyValue?.username;
-    username = username ? ` '${username}'` : ``;
+    username = username ? ` '${username}'` : '';
     return res.status(400).json({
       error: `User creation failed: username${username} is already taken`,
     });
@@ -58,7 +58,7 @@ const globalErrorHandler = (err, req, res, next) => {
   return next(err);
 };
 
-module.exports = {
+export default {
   addRequestLogger,
   tokenExtractor,
   userExtractor,

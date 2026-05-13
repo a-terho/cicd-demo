@@ -164,4 +164,4 @@ const usersMany = [
   },
 ];
 
-module.exports = { blogs, blogsOne, blogsMany, usersMany };
+export { blogs, blogsOne, blogsMany, usersMany };

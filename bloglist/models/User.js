@@ -1,6 +1,6 @@
-const logger = require('../utils/logger');
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+import logger from '../utils/logger.js'
+import mongoose from 'mongoose';
+import bcrypt from 'bcryptjs';
 
 const userSchema = mongoose.Schema(
   {
@@ -70,4 +70,4 @@ userSchema.methods.checkPassword = async function (password) {
   return await bcrypt.compare(password, this.passwordHash);
 };
 
-module.exports = mongoose.model('User', userSchema);
+export default mongoose.model('User', userSchema);

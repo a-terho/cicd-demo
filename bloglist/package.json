@@ -1,5 +1,5 @@
 {
-  "name": "blogilist",
+  "name": "bloglist",
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
@@ -11,7 +11,7 @@
     "dev": "cross-env NODE_ENV=development node --watch index.js",
     "test": "cross-env NODE_ENV=test node --test",
     "dev:test": "cross-env NODE_ENV=test node --watch index.js",
-    "lint": "eslint . && npm run lint --prefix client"
+    "lint": "eslint ."
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

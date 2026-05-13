@@ -1,8 +1,8 @@
-const config = require('../utils/config');
-const jwt = require('jsonwebtoken');
+import config from '../utils/config.js';
+import jwt from 'jsonwebtoken';
 
-const Blog = require('../models/Blog');
-const User = require('../models/User');
+import Blog from '../models/Blog.js';
+import User from '../models/User.js';
 
 function randomElement(list) {
   return list[Math.floor(Math.random() * list.length)];
@@ -38,12 +38,12 @@ const giveSomeOtherValidUser = async function (userId) {
 const giveValidJwtToken = async function (user = undefined) {
   // jos käyttäjä annetaan, luo uusi token sen pohjalta
   // muutoin luo token satunnaisesta käyttäjästä
-  const someUser = user == undefined ? await giveValidUser() : user;
+  const someUser = user === undefined ? await giveValidUser() : user;
   const payload = { username: someUser.username, id: someUser.id };
   return jwt.sign(payload, config.JWT_SECRET, { expiresIn: '1h' });
 };
 
-module.exports = {
+export {
   randomElement,
   giveValidRemovedBlogId,
   giveValidBlog,

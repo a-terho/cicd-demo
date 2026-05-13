@@ -1,10 +1,11 @@
-const config = require('../utils/config');
-const jwt = require('jsonwebtoken');
+import config from '../utils/config.js';
+import jwt from 'jsonwebtoken';
 
-const router = require('express').Router();
-module.exports = router;
+import { Router } from 'express';
+const router = Router();
+export default router;
 
-const User = require('../models/User');
+import User from '../models/User.js';
 
 router.post('/', async (req, res) => {
   const { username, password } = req.body || {};

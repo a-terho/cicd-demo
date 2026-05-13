@@ -1,7 +1,8 @@
-const router = require('express').Router();
-module.exports = router;
+import { Router } from 'express';
+const router = Router();
+export default router;
 
-const User = require('../models/User');
+import User from '../models/User.js';
 
 router.get('/', async (req, res) => {
   const users = await User.find({}).populate({

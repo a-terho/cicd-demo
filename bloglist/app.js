@@ -1,13 +1,13 @@
-const config = require('./utils/config');
-const logger = require('./utils/logger');
-const middleware = require('./utils/middleware');
+import config from './utils/config.js';
+import logger from './utils/logger.js';
+import middleware from './utils/middleware.js';
 
-const express = require('express');
-const mongoose = require('mongoose');
+import express from 'express';
+import mongoose from 'mongoose';
 
 // luodaan Express app
 const app = express();
-module.exports = app;
+export default app;
 
 // tietokantayhteys
 logger.info('connecting to MongoDB...');
@@ -24,16 +24,16 @@ app.use(middleware.addRequestLogger());
 app.use(middleware.tokenExtractor);
 
 // reitittimet
-const blogsRouter = require('./controllers/blogs');
-const loginRouter = require('./controllers/login');
-const usersRouter = require('./controllers/users');
+import blogsRouter from './controllers/blogs.js';
+import loginRouter from './controllers/login.js';
+import usersRouter from './controllers/users.js';
 app.use('/api/blogs', middleware.userExtractor, blogsRouter);
 app.use('/api/login', loginRouter);
 app.use('/api/users', usersRouter);
 
 // vain testeissä käytettävä nollausreitti
+import testingRouter from './controllers/testing.js';
 if (process.env.NODE_ENV === 'test') {
-  const testingRouter = require('./controllers/testing');
   app.use('/api/testing', testingRouter);
 }
 
