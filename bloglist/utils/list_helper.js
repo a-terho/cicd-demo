@@ -44,4 +44,4 @@ const mostLikes = (blogs) => {
   return result;
 };
 
-export { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes };
+export default { dummy, totalLikes, favoriteBlog, mostBlogs, mostLikes };

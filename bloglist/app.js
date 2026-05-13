@@ -1,22 +1,10 @@
-import config from './utils/config.js';
-import logger from './utils/logger.js';
 import middleware from './utils/middleware.js';
 
 import express from 'express';
-import mongoose from 'mongoose';
 
 // luodaan Express app
 const app = express();
 export default app;
-
-// tietokantayhteys
-logger.info('connecting to MongoDB...');
-mongoose
-  .connect(config.MONGODB_URI, { family: 4 })
-  .then(() => logger.info('connected to MongoDB'))
-  .catch((err) =>
-    logger.error('error while connecting to MongoDB:', err.message),
-  );
 
 // globaalit middlewaret
 app.use(express.json());

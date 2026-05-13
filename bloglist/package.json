@@ -11,7 +11,7 @@
     "dev": "cross-env NODE_ENV=development node --watch index.js",
     "test": "cross-env NODE_ENV=test node --test",
     "dev:test": "cross-env NODE_ENV=test node --watch index.js",
-    "lint": "eslint ."
+    "lint": "eslint . && npm run lint . --prefix client"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

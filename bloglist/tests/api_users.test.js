@@ -1,13 +1,16 @@
 import assert from 'node:assert';
-import { test, describe, beforeEach, after } from 'node:test';
+import { test, describe, beforeEach, after, before } from 'node:test';
 import supertest from 'supertest';
-import mongoose from 'mongoose';
 
 import app from '../app.js';
 const api = supertest(app);
 
 import { usersMany } from './data.js';
 import User from '../models/User.js';
+
+import { connectDb, disconnectDb } from '../db.js';
+before(async () => await connectDb());
+after(async () => await disconnectDb());
 
 describe('route /api/users with empty database', () => {
   beforeEach(async () => {
@@ -153,8 +156,4 @@ describe('route /api/users with some users in database', () => {
       }
     });
   });
-});
-
-after(async () => {
-  await mongoose.connection.close();
 });

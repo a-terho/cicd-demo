@@ -1,4 +1,4 @@
-import logger from '../utils/logger.js'
+import logger from '../utils/logger.js';
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
@@ -70,4 +70,5 @@ userSchema.methods.checkPassword = async function (password) {
   return await bcrypt.compare(password, this.passwordHash);
 };
 
-export default mongoose.model('User', userSchema);
+const model = mongoose.model('User', userSchema);
+export default model;
