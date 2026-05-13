@@ -9,6 +9,7 @@ import { defineConfig, devices } from '@playwright/test';
 // dotenv.config();
 
 import config from './src/utils/config.js';
+console.log(config.PORT);
 
 /**
  * @see https://playwright.dev/docs/test-configuration
@@ -55,5 +56,7 @@ export default defineConfig({
     command: 'npm run e2e:start',
     url: `http://localhost:${config.PORT}`,
     reuseExistingServer: !process.env.CI,
+    stdout: 'pipe',
+    stderr: 'pipe',
   },
 });
