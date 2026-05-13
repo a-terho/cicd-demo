@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
 
     steps:
       - uses: actions/checkout@v6
