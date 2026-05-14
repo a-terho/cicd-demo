@@ -8,9 +8,12 @@ const api = supertest(app);
 import { usersMany } from './data.js';
 import User from '../models/User.js';
 
-import { connectDb, disconnectDb } from '../db.js';
-before(async () => await connectDb());
-after(async () => await disconnectDb());
+import { connectTestDb, disconnectTestDb, dropTestDb } from './db.js';
+before(async () => await connectTestDb());
+after(async () => {
+  await dropTestDb();
+  await disconnectTestDb();
+});
 
 describe('route /api/users with empty database', () => {
   beforeEach(async () => {
