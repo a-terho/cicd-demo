@@ -30,6 +30,11 @@ if (process.env.NODE_ENV === 'test') {
   app.use('/api/testing', testingRouter);
 }
 
+// health endpoint
+app.use('/health', (req, res) => {
+  res.status(200).send('ok');
+});
+
 // virheidenkäsittelyn middlewaret
 app.use(middleware.noEndpoint);
 app.use(middleware.globalErrorHandler);
