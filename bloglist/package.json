@@ -13,7 +13,7 @@
     "dev:test": "cross-env NODE_ENV=test node --watch index.js",
     "lint": "eslint .",
     "build": "npm run build --prefix client",
-    "e2e:start": "cross-env NODE_ENV=test node index.js",
+    "e2e:start": "cross-env NODE_ENV=test PORT=3001 node index.js",
     "e2e:test": "playwright test --trace on",
     "e2e:report": "playwright show-report"
   },

@@ -8,9 +8,6 @@ import { defineConfig, devices } from '@playwright/test';
 // import dotenv from 'dotenv';
 // dotenv.config();
 
-import config from './src/utils/config.js';
-console.log(config.PORT);
-
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
@@ -27,7 +24,7 @@ export default defineConfig({
 
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: `http://localhost:${config.PORT}`,
+    baseURL: 'http://localhost:3001',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -54,7 +51,7 @@ export default defineConfig({
   /* Run your local dev server before starting the tests */
   webServer: {
     command: 'npm run e2e:start',
-    url: `http://localhost:${config.PORT}`,
+    url: 'http://localhost:3001',
     reuseExistingServer: !process.env.CI,
     stdout: 'pipe',
     stderr: 'pipe',

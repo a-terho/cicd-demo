@@ -34,7 +34,7 @@ jobs:
         working-directory: bloglist
         run: npm test -- --test-concurrency=1
 
-      - name: Install Playwright Browsers
+      - name: Install Playwright browsers
         working-directory: bloglist
         run: npx playwright install --with-deps chromium
 
