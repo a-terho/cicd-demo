@@ -12,7 +12,7 @@ import {
 } from '../eslint.shared.mjs';
 
 export default defineConfig([
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'node_modules/**'] },
   js.configs.recommended,
   {
     files: ['**/*.{js,jsx}'],
