@@ -29,7 +29,7 @@ beforeEach(async () => {
   await Promise.all([Blog.deleteMany(), User.deleteMany()]);
 
   // lisää käyttäjät testitietokantaan
-  const users = await User.insertMany(usersMany);
+  const users = await User.insertMany(usersMany.map((user) => ({ ...user })));
 
   // liitä satunnainen käyttäjä joka blogiin
   const blogsManyWithUser = blogsMany.map((blog) => {
