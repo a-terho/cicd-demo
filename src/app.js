@@ -8,7 +8,7 @@ const app = express();
 export default app;
 
 // jaa bundlattu frontend tuotantovaiheessa
-console.log(projectRoot);
+console.log('root directory:', projectRoot);
 app.use(express.static(join(projectRoot, '/client/dist')));
 
 // globaalit middlewaret
