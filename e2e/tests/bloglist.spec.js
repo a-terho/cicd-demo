@@ -1,22 +1,22 @@
-const { test, expect, beforeEach, describe } = require('@playwright/test');
-const {
+import { test, expect } from '@playwright/test';
+import {
   createUser,
   loginAction,
   openBlogForm,
   fillAndSubmitBlogForm,
   createBlog,
-} = require('./helpers');
+} from './helpers.js';
 
-describe('Blog app', () => {
-  beforeEach(async ({ page, request }) => {
+test.describe('Blog app', () => {
+  test.beforeEach(async ({ page, request }) => {
     await request.post('/api/testing/reset');
     await createUser(request, 'Matti Luukkainen', 'mluukkai', 'salainen');
 
     await page.goto('/');
   });
 
-  describe('Login', () => {
-    beforeEach(async ({ page }) => {
+  test.describe('Login', () => {
+    test.beforeEach(async ({ page }) => {
       // siirry ensin kirjautumissivulle
       await page.getByRole('link', { name: 'login' }).click();
     });
@@ -50,8 +50,8 @@ describe('Blog app', () => {
     });
   });
 
-  describe('When logged in', () => {
-    beforeEach(async ({ page }) => {
+  test.describe('When logged in', () => {
+    test.beforeEach(async ({ page }) => {
       await page.getByRole('link', { name: 'login' }).click();
       await loginAction(page, 'mluukkai', 'salainen');
       await page.getByRole('button', { name: 'logout' }).waitFor();
@@ -79,8 +79,8 @@ describe('Blog app', () => {
       ).toBeVisible();
     });
 
-    describe('and a blog is created', () => {
-      beforeEach(async ({ page }) => {
+    test.describe('and a blog is created', () => {
+      test.beforeEach(async ({ page }) => {
         await createBlog(page, {
           title: "You Don't Know JS Yet (book series)",
           author: 'Kyle Simpson',

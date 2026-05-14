@@ -51,7 +51,7 @@ const viewAndLikeBlog = async (blog, times) => {
   }
 };
 
-module.exports = {
+export {
   createUser,
   loginAction,
   openBlogForm,

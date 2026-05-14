@@ -26,32 +26,40 @@ after(async () => await disconnectDb());
 beforeEach(async () => {
   // tyhjennä tietokanta ja lisää käyttäjät
   // tämän vuoksi tulee käyttää --test-concurrency=1 flagia jos ajetaan useita tiedostoja
-  await Blog.deleteMany();
-  await User.deleteMany();
-  await User.insertMany(usersMany);
+  await Promise.all([Blog.deleteMany(), User.deleteMany()]);
 
-  const userBlogs = {};
-  const users = await User.find({});
-  const blogs = blogsMany.map((blog) => {
-    // liitä satunnainen käyttäjä joka blogiin
+  // lisää käyttäjät testitietokantaan
+  const users = await User.insertMany(usersMany);
+
+  // liitä satunnainen käyttäjä joka blogiin
+  const blogsManyWithUser = blogsMany.map((blog) => {
     const randomUser = randomElement(users);
-    blog.user = randomUser._id;
-
-    // pidä kirjaa käyttäjään liitetyistä blogeista
-    userBlogs[randomUser.id] ||= [];
-    userBlogs[randomUser.id].push(blog._id);
-
-    // lisää itse blogi listaan
-    return blog;
+    return {
+      ...blog,
+      user: randomUser._id,
+    };
   });
-  await Blog.insertMany(blogs);
+
+  // lisää blogit testitietokantaan
+  const blogs = await Blog.insertMany(blogsManyWithUser);
+
+  // pidä kirjaa käyttäjään liitetyistä blogeista
+  const userBlogMap = users.reduce((map, user) => {
+    map[user._id.toString()] = [];
+    return map;
+  }, {});
+
+  blogs.forEach((blog) => {
+    userBlogMap[blog.user.toString()].push(blog._id);
+  });
 
   // tallenna blogit myös käyttäjän tietoihin
-  for (let userId of Object.keys(userBlogs)) {
-    const user = await User.findById(userId);
-    user.blogs = userBlogs[userId];
-    await user.save();
-  }
+  await Promise.all(
+    users.map(async (user) => {
+      user.blogs = userBlogMap[user._id.toString()];
+      await user.save();
+    }),
+  );
 });
 
 describe('route /api/blogs', () => {
