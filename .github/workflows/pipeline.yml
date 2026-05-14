@@ -1,0 +1,55 @@
+name: Bloglist deployment pipeline
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
+jobs:
+  deployment_pipeline:
+    runs-on: ubuntu-latest
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        working-directory: bloglist
+        run: npm ci && npm ci --prefix client
+
+      - name: Check style
+        working-directory: bloglist
+        run: npm run lint && npm run lint --prefix client
+
+      - name: Run backend tests
+        working-directory: bloglist
+        run: npm test -- --test-concurrency=1
+
+      - name: Build
+        working-directory: bloglist
+        run: npm run build
+
+      - name: Install Playwright browsers
+        working-directory: bloglist
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        working-directory: bloglist
+        run: npm run e2e:test
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: bloglist/playwright-report/
+          retention-days: 30
