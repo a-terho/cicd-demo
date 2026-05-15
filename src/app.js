@@ -3,6 +3,8 @@ import { projectRoot } from './utils/dir.js';
 import middleware from './utils/middleware.js';
 import express from 'express';
 
+import pkg from '../package.json' with { type: 'json' };
+
 // luodaan Express app
 const app = express();
 export default app;
@@ -30,9 +32,12 @@ if (process.env.NODE_ENV === 'test') {
   app.use('/api/testing', testingRouter);
 }
 
-// health endpoint
 app.use('/health', (req, res) => {
   res.status(200).send('ok');
+});
+
+app.use('/version', (req, res) => {
+  res.status(200).send(pkg.version);
 });
 
 // virheidenkäsittelyn middlewaret

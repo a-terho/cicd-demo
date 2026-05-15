@@ -1,7 +1,7 @@
 import js from '@eslint/js';
 import globals from 'globals';
 
-import { defineConfig, globalIgnores } from 'eslint/config';
+import { defineConfig } from 'eslint/config';
 import {
   sharedConfig,
   sharedLanguageOptions,
@@ -9,7 +9,14 @@ import {
 } from './eslint.shared.mjs';
 
 export default defineConfig([
-  globalIgnores(['client/**']),
+  {
+    ignores: [
+      'client/**',
+      'node_modules/**',
+      'playwright-report/**',
+      'test-results/**',
+    ],
+  },
   js.configs.recommended,
   {
     files: ['**/*.{js,mjs,cjs}'],

@@ -18,18 +18,21 @@ import { blogsMany, usersMany } from './data.js';
 import Blog from '../models/Blog.js';
 import User from '../models/User.js';
 
-import { connectDb, disconnectDb } from '../db.js';
-before(async () => await connectDb());
-after(async () => await disconnectDb());
+import { connectTestDb, disconnectTestDb, dropTestDb } from './db.js';
+before(async () => await connectTestDb());
+after(async () => {
+  await dropTestDb();
+  await disconnectTestDb();
+});
 
 // testitietokannan valmistelu
 beforeEach(async () => {
-  // tyhjennä tietokanta ja lisää käyttäjät
-  // tämän vuoksi tulee käyttää --test-concurrency=1 flagia jos ajetaan useita tiedostoja
-  await Promise.all([Blog.deleteMany(), User.deleteMany()]);
+  // tyhjennä tietokanta
+  await Blog.deleteMany();
+  await User.deleteMany();
 
   // lisää käyttäjät testitietokantaan
-  const users = await User.insertMany(usersMany.map((user) => ({ ...user })));
+  const users = await User.insertMany(usersMany);
 
   // liitä satunnainen käyttäjä joka blogiin
   const blogsManyWithUser = blogsMany.map((blog) => {
@@ -44,20 +47,25 @@ beforeEach(async () => {
   const blogs = await Blog.insertMany(blogsManyWithUser);
 
   // pidä kirjaa käyttäjään liitetyistä blogeista
-  const userBlogMap = users.reduce((map, user) => {
-    map[user._id.toString()] = [];
-    return map;
-  }, {});
+  const userBlogMap = new Map();
+  for (const blog of blogs) {
+    const userId = blog.user._id.toString();
 
-  blogs.forEach((blog) => {
-    userBlogMap[blog.user.toString()].push(blog._id);
-  });
+    if (!userBlogMap.has(userId)) {
+      userBlogMap.set(userId, []);
+    }
+    userBlogMap.get(userId).push(blog._id);
+  }
 
   // tallenna blogit myös käyttäjän tietoihin
-  await Promise.all(
-    users.map(async (user) => {
-      user.blogs = userBlogMap[user._id.toString()];
-      await user.save();
+  await User.bulkWrite(
+    [...userBlogMap.entries()].map(([userId, blogIds]) => {
+      return {
+        updateOne: {
+          filter: { _id: userId },
+          update: { blogs: blogIds },
+        },
+      };
     }),
   );
 });

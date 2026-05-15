@@ -1,0 +1,1 @@
+GET https://bloglist-wkco.onrender.com/version
