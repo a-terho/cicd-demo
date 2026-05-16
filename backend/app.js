@@ -3,7 +3,7 @@ import { projectRoot } from './utils/dir.js';
 import middleware from './utils/middleware.js';
 import express from 'express';
 
-import pkg from '../package.json' with { type: 'json' };
+import pkg from './package.json' with { type: 'json' };
 
 // luodaan Express app
 const app = express();
@@ -11,7 +11,7 @@ export default app;
 
 // jaa bundlattu frontend tuotantovaiheessa
 console.log('root directory:', projectRoot);
-app.use(express.static(join(projectRoot, '/client/dist')));
+app.use(express.static(join(projectRoot, '/frontend/dist')));
 
 // globaalit middlewaret
 app.use(express.json());

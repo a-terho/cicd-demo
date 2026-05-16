@@ -6,12 +6,12 @@ import {
   sharedConfig,
   sharedLanguageOptions,
   stylisticConfig,
-} from './eslint.shared.mjs';
+} from '../eslint.shared.mjs';
 
 export default defineConfig([
   {
     ignores: [
-      'client/**',
+      'frontend/**',
       'node_modules/**',
       'playwright-report/**',
       'test-results/**',
