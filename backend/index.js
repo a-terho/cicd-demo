@@ -1,8 +1,8 @@
-import config from './src/utils/config.js';
-import logger from './src/utils/logger.js';
+import config from './utils/config.js';
+import logger from './utils/logger.js';
 
-import app from './src/app.js';
-import { connectDb } from './src/db.js';
+import app from './app.js';
+import { connectDb } from './db.js';
 
 const main = async () => {
   await connectDb();
